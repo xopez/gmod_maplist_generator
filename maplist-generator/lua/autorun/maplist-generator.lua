@@ -77,6 +77,9 @@ if SERVER then
     end
 
     -- Run on server start and with delay
+    -- Note: GenerateMapList is called twice (immediately and after 10 seconds)
+    -- to ensure all maps are detected correctly after server start.
+    -- Some mounts/files may only become available after a short delay.
     hook.Add("Initialize", "MapListGenerator_Init", function()
         GenerateMapList()
         timer.Simple(10, function()
