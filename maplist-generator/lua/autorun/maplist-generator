@@ -1,0 +1,31 @@
+-- filepath: /Users/sascha/Documents/GitHub/gmod_maplist_generator/lua/autorun/maplist-generator
+
+-- Configure your prefixes here
+local prefixes = { "gm_", "cs_" } -- Add or remove prefixes as needed
+
+-- Ensure the data/maplist-generator directory exists
+if not file.Exists("maplist-generator", "DATA") then
+    file.CreateDir("maplist-generator")
+end
+
+-- Get all map names (without .bsp extension)
+local all_maps = {}
+for _, map in ipairs(file.Find("maps/*.bsp", "GAME")) do
+    local name = map:match("^(.-)%.bsp$")
+    if name then
+        all_maps[#all_maps + 1] = name
+    end
+end
+
+-- For each prefix, filter maps and save to /data/maplist-generator/<prefix>.txt
+for _, prefix in ipairs(prefixes) do
+    local filtered = {}
+    for _, name in ipairs(all_maps) do
+        if name:StartWith(prefix) then
+            filtered[#filtered + 1] = name
+        end
+    end
+    local filename = "maplist-generator/" .. prefix .. ".txt"
+    file.Write(filename, table.concat(filtered, "\n"))
+    print("Saved " .. #filtered .. " maps to data/" .. filename)
+end
