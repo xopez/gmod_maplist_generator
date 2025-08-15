@@ -5,8 +5,8 @@ if SERVER then
 
     -- Default configuration
     local defaultConfig = {
-        fileName = "maps.txt",       -- Output file name in data/maplist-generator
-        prefixes = { "gm_", "cs_" }  -- Prefix filter (empty = all maps)
+        fileName = "maps.txt", -- Output file name in data/maplist-generator
+        prefixes = { "gm_", "cs_" }, -- Prefix filter (empty = all maps)
     }
 
     -- Ensure the data folder exists
