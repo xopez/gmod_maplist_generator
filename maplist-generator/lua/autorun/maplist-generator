@@ -1,7 +1,23 @@
 -- filepath: /Users/sascha/Documents/GitHub/gmod_maplist_generator/lua/autorun/maplist-generator
 
+-- Read prefixes from /data/maplist-generator/prefixes.json
+local function readPrefixes()
+    local path = "maplist-generator/prefixes.json"
+    if not file.Exists(path, "DATA") then
+        local example = '[\n  "gm_",\n  "cs_"\n]'
+        file.Write(path, example)
+        print("Created data/" .. path .. " with example JSON content.")
+    end
+    local content = file.Read(path, "DATA") or "[]"
+    local ok, prefixes = pcall(util.JSONToTable, content)
+    if not ok or type(prefixes) ~= "table" then
+        prefixes = {}
+    end
+    return prefixes
+end
+
 -- Configure your prefixes here
-local prefixes = { "gm_", "cs_" } -- Add or remove prefixes as needed
+local prefixes = readPrefixes()
 
 -- Ensure the data/maplist-generator directory exists
 if not file.Exists("maplist-generator", "DATA") then
