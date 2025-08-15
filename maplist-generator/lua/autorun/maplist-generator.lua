@@ -20,7 +20,7 @@ if SERVER then
     local function LoadOrCreateConfig()
         EnsureDataFolder()
         if not file.Exists(configFile, "DATA") then
-            local json = util.TableToJSON(defaultConfig, true)
+            local json = util.TableToJSON(defaultConfig, false)
             file.Write(configFile, json)
             print("[MapList Generator] Config created: " .. configFile)
             return table.Copy(defaultConfig)
